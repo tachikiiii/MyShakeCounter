@@ -2,14 +2,15 @@ let shakeCount = 0;
 let lastX = null;
 let lastY = null;
 let lastZ = null;
-const threshold = 15;
-const debounceTime = 500;
+const threshold = 10;
+const debounceTime = 350;
 let lastShakeTime = 0;
 let gameTimer = null;
 
 // 音声ファイルの参照
 const countdownSound = document.getElementById('countdownSound');
 const shakeSound = document.getElementById('shakeSound');
+const finishSound = document.getElementById('finishSound');
 
 function handleMotion(event) {
     const { x, y, z } = event.accelerationIncludingGravity;
@@ -51,6 +52,7 @@ function startGame() {
             enableMotion();
 
             gameTimer = setTimeout(() => {
+                finishSound.play();
                 window.removeEventListener('devicemotion', handleMotion);
                 document.body.innerHTML = `<h1>ゲーム終了!</h1><p>振った回数: ${shakeCount}</p><button onclick="startGame()">再挑戦</button>`;
             }, 10000);

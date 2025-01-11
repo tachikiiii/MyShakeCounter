@@ -66,9 +66,8 @@ document.addEventListener('click', () => {
 // ページ読み込み時に実行
 document.addEventListener('DOMContentLoaded', () => {
     // 初期メッセージ
-    document.body.innerHTML += '<p>画面をタップしてセンサーを有効にしてください。</p>';
     const button = document.createElement('button');
-    button.innerText = 'モーションセンサーを有効にする';
+    button.innerText = 'ゲームを開始する';
     button.addEventListener('click', requestDeviceMotionPermission);
     document.body.appendChild(button);
 });

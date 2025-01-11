@@ -3,7 +3,8 @@ let lastX = null;
 let lastY = null;
 let lastZ = null;
 const threshold = 15; // 振る強さの閾値
-let motionEnabled = false; // モーションイベントが有効かどうかを追跡
+const minShakeDuration = 300; // 最小振動の持続時間（ミリ秒）
+let lastShakeTime = 0; // 最後に振った時間
 
 function handleMotion(event) {
     const { x, y, z } = event.accelerationIncludingGravity;
@@ -13,9 +14,14 @@ function handleMotion(event) {
         const deltaY = Math.abs(y - lastY);
         const deltaZ = Math.abs(z - lastZ);
 
-        if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
-            shakeCount++;
-            document.getElementById('shakeCount').innerText = shakeCount;
+        // 振動の強さが閾値を超えている場合にカウント
+        if ((deltaX > threshold || deltaY > threshold || deltaZ > threshold)) {
+            const currentTime = Date.now();
+            if (currentTime - lastShakeTime > minShakeDuration) {
+                shakeCount++;
+                document.getElementById('shakeCount').innerText = shakeCount;
+                lastShakeTime = currentTime;
+            }
         }
     }
 
@@ -43,11 +49,7 @@ function requestDeviceMotionPermission() {
 
 // モーションセンサーを有効にする
 function enableMotion() {
-    if (!motionEnabled) {
-        window.addEventListener('devicemotion', handleMotion);
-        motionEnabled = true;
-        console.log("モーションセンサーが有効になりました");
-    }
+    window.addEventListener('devicemotion', handleMotion);
 }
 
 // 画面タップでモーションセンサーを有効にする

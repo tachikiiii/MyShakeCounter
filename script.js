@@ -7,6 +7,10 @@ const debounceTime = 500;
 let lastShakeTime = 0;
 let gameTimer = null;
 
+// 音声ファイルの参照
+const countdownSound = document.getElementById('countdownSound');
+const shakeSound = document.getElementById('shakeSound');
+
 function handleMotion(event) {
     const { x, y, z } = event.accelerationIncludingGravity;
 
@@ -21,6 +25,7 @@ function handleMotion(event) {
                 shakeCount++;
                 document.getElementById('shakeCount').innerText = shakeCount;
                 lastShakeTime = currentTime;
+                shakeSound.play(); // シェイク音を再生
             }
         }
     }
@@ -38,6 +43,7 @@ function startGame() {
     const countdownInterval = setInterval(() => {
         if (countdown > 0) {
             document.body.innerHTML = `<h1>${countdown}</h1>`;
+            countdownSound.play(); // カウントダウン音を再生
             countdown--;
         } else {
             clearInterval(countdownInterval);

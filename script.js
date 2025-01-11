@@ -3,8 +3,9 @@ let lastX = null;
 let lastY = null;
 let lastZ = null;
 const threshold = 15; // 振る強さの閾値
-const minShakeDuration = 300; // 最小振動の持続時間（ミリ秒）
+const debounceTime = 500; // 振動のデバウンス時間（ミリ秒）
 let lastShakeTime = 0; // 最後に振った時間
+let isShaking = false; // 振動が発生したかどうかのフラグ
 
 function handleMotion(event) {
     const { x, y, z } = event.accelerationIncludingGravity;
@@ -14,13 +15,15 @@ function handleMotion(event) {
         const deltaY = Math.abs(y - lastY);
         const deltaZ = Math.abs(z - lastZ);
 
-        // 振動の強さが閾値を超えている場合にカウント
-        if ((deltaX > threshold || deltaY > threshold || deltaZ > threshold)) {
+        // 振動が一定の閾値を超えた場合にカウント
+        if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
             const currentTime = Date.now();
-            if (currentTime - lastShakeTime > minShakeDuration) {
+
+            // デバウンス処理
+            if (currentTime - lastShakeTime > debounceTime) {
                 shakeCount++;
                 document.getElementById('shakeCount').innerText = shakeCount;
-                lastShakeTime = currentTime;
+                lastShakeTime = currentTime; // 最後の振動時間を更新
             }
         }
     }

@@ -2,8 +2,8 @@ let shakeCount = 0;
 let lastX = null;
 let lastY = null;
 let lastZ = null;
-const threshold = 10;
-const debounceTime = 350;
+const threshold = 5; //小さくすれば感度up 10→5にしました
+const debounceTime = 200; //小さくすれば感度up 300→200にしました
 let lastShakeTime = 0;
 let gameTimer = null;
 

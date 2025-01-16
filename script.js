@@ -9,8 +9,8 @@ let gameTimer = null;
 
 // 音声ファイルの参照
 const countdownSound = document.getElementById('countdownSound');
-const shakeSound = document.getElementById('shakeSound');
-const finishSound = document.getElementById('finishSound');
+// const shakeSound = document.getElementById('shakeSound');
+const finishSound = document.getElementById('finishSound'); 
 
 function handleMotion(event) {
     const { x, y, z } = event.accelerationIncludingGravity;
@@ -26,7 +26,7 @@ function handleMotion(event) {
                 shakeCount++;
                 document.getElementById('shakeCount').innerText = shakeCount;
                 lastShakeTime = currentTime;
-                shakeSound.play(); // シェイク音を再生
+                // shakeSound.play(); // シェイク音を再生
             }
         }
     }

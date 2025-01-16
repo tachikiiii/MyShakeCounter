@@ -16,7 +16,9 @@ body {
 
 h1 {
   margin-bottom: 20px;
-  color: #006064;
+  /* color: #006064; */
+  color: yellow;
+
 }
 
 p {
